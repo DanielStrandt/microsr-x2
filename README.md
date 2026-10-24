@@ -97,6 +97,21 @@ A previous local V6 experiment reported the following **development validation**
 
 These are **user-reported training/evaluation results**, not CI benchmarks; the original images and split manifest are not bundled. Validation had been consulted during development, so it is **not an untouched independent test set**. They should not be presented as a new independent benchmark or a claim of being the world's smallest/most accurate model. See [Benchmark methodology](docs/BENCHMARKS.md) for reproducible and publication-ready evaluation guidance.
 
+### Classic 2× benchmark suite
+
+The included model was evaluated on the four complete classic sets available from the EDSR-linked archive. Scores are mean per-image Y-channel metrics under the documented protocol:
+
+| Dataset | Images | Bicubic Y PSNR (dB) | MicroSR Y PSNR (dB) | Gain | Bicubic Y SSIM | MicroSR Y SSIM |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Set5 | 5 | 33.6486 | **34.5494** | **+0.9008 dB** | 0.92923 | **0.93861** |
+| Set14 | 14 | 30.3177 | **31.0899** | **+0.7722 dB** | 0.86893 | **0.88992** |
+| BSD100 | 100 | 29.5445 | **30.2639** | **+0.7195 dB** | 0.84232 | **0.87052** |
+| Urban100 | 100 | 26.8676 | **27.6051** | **+0.7375 dB** | 0.83953 | **0.86257** |
+
+RGB PSNR/SSIM and per-image timings are in the [per-image results](docs/benchmark_per_image_x2.csv); aggregate metrics, stored parameter counts, model-file size, and hardware/memory fields are in the [machine-readable summary](docs/benchmark_results_x2.json). This CPU run measured mean forward-call times of 10.3 ms, 19.1 ms, 11.5 ms, and 82.0 ms respectively; GPU memory was not measured.
+
+Manga109 was skipped because official access is gated. Dataset images remain local and are not included. See [benchmark protocol, download instructions, and terms](docs/BENCHMARKS.md), plus the [machine-readable results and hashes](docs/benchmark_results_x2.json).
+
 ## Project structure
 
 ```text
@@ -108,7 +123,7 @@ microsr-x2-int2/
 ├── model/                       # Included 495-byte V6 .msr model
 ├── tests/                       # Synthetic, model-independent regression tests
 ├── research/                    # Optional trainer and color/exposure audit
-├── scripts/                     # Release builder and checkpoint parity verifier
+├── scripts/                     # Release, parity, benchmark download and evaluation tools
 ├── docs/                        # Format, architecture, benchmark, publishing notes
 └── .github/workflows/ci.yml     # Windows + Linux automated tests
 ```
@@ -152,3 +167,4 @@ See [Architecture](docs/ARCHITECTURE.md), [Model format](docs/MODEL_FORMAT.md), 
 ## License
 
 The MIT license in `LICENSE` applies to the software source. The model weights are governed separately by [model/LICENSE_NOTICE.md](model/LICENSE_NOTICE.md).
+
