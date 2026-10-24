@@ -105,7 +105,7 @@ microsr-x2-int2/
 ├── microsr_infer.py             # File/folder CLI
 ├── microsr_gui.py               # Tkinter desktop interface
 ├── Launch_MicroSR_GUI.bat       # Windows double-click launcher
-├── model/                       # Add your own microsr_v6.msr
+├── model/                       # Included 495-byte V6 .msr model
 ├── tests/                       # Synthetic, model-independent regression tests
 ├── research/                    # Optional trainer and color/exposure audit
 ├── scripts/                     # Release builder and checkpoint parity verifier
@@ -152,4 +152,3 @@ See [Architecture](docs/ARCHITECTURE.md), [Model format](docs/MODEL_FORMAT.md), 
 ## License
 
 The MIT license in `LICENSE` applies to the software source. The model weights are governed separately by [model/LICENSE_NOTICE.md](model/LICENSE_NOTICE.md).
-

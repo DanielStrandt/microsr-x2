@@ -1,0 +1,15 @@
+name: Feature request
+description: Suggest an enhancement to the inference toolkit
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: What problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: design
+    attributes:
+      label: Proposed behavior

@@ -1,0 +1,42 @@
+# Python bytecode and environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.env
+.env.*
+*.pem
+*.key
+*.egg-info/
+
+# Large local outputs and training checkpoints
+runs/
+data/
+output/
+outputs/
+dist/
+build/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.log
+
+# Local trainer-export pairs (compact .msr is intentionally NOT ignored)
+microsr_int2.bin
+microsr_int2.json
+model/*.bin
+model/*.pt
+model/*.json
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
