@@ -1,12 +1,10 @@
-# MicroSR-X2: 2× Super-Resolution with 99 Bytes of INT2 Weight Codes
+# MicroSR-X2: 2× Super-Resolution in a 495-Byte Model
 
-> **396 packed 2-bit weight codes · 492 stored parameter values · 495-byte `.msr` model file · +0.5323 dB over bicubic in development validation**
+> **396 packed 2-bit weight codes · 492 stored parameter values · 495-byte `.msr` file · up to +0.90 dB Y-PSNR over bicubic on classic benchmarks**
 
 MicroSR-X2 is an experiment in how far a small neural network can improve 2× image upscaling. Its four-level quantized convolution weights occupy 99 packed bytes. The model also stores 48 FP32 channel scales and 48 FP32 biases; a 12-byte header and CRC32 bring the complete `.msr` file to 495 bytes. Inference uses PyTorch floating-point operations and a bicubic residual connection.
 
 The spatial model expands RGB input to 12 feature channels, applies two 3×3 depthwise convolutions, then projects to 12 channels for PixelShuffle(2) residual output. The learned residual is added to a bicubic-upscaled input. This compact topology is an engineering experiment; the app still depends on PyTorch, NumPy and Pillow.
-
-The reported **+0.5323 dB PSNR** gain over bicubic comes from a 205-image development validation split with five fixed crops per image. That split was consulted during development, so this is not an independent benchmark. The original validation images and split manifest are not included. See [benchmark methodology](docs/BENCHMARKS.md) before making quality comparisons.
 
 - **396 convolution weights, quantized to four levels** (99 packed bytes).
 - **48 FP32 channel scales + 48 FP32 biases** (384 additional bytes).
@@ -15,6 +13,19 @@ The reported **+0.5323 dB PSNR** gain over bicubic comes from a 205-image develo
 - Optional research trainer, color/exposure audit, and tests.
 
 > **Model terms:** the repository includes `model/microsr_v6.msr`. The MIT license covers the software source only; see [model weight terms](model/LICENSE_NOTICE.md) for the separate terms.
+
+## Classic 2× benchmark results
+
+The included model was evaluated on four complete classic datasets. Scores are mean per-image Y-channel metrics under the documented protocol:
+
+| Dataset | Images | Bicubic Y PSNR (dB) | MicroSR Y PSNR (dB) | Gain | Bicubic Y SSIM | MicroSR Y SSIM |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Set5 | 5 | 33.6486 | **34.5494** | **+0.9008 dB** | 0.92923 | **0.93861** |
+| Set14 | 14 | 30.3177 | **31.0899** | **+0.7722 dB** | 0.86893 | **0.88992** |
+| BSD100 | 100 | 29.5445 | **30.2639** | **+0.7195 dB** | 0.84232 | **0.87052** |
+| Urban100 | 100 | 26.8676 | **27.6051** | **+0.7375 dB** | 0.83953 | **0.86257** |
+
+RGB PSNR/SSIM and per-image timings are in the [per-image results](docs/benchmark_per_image_x2.csv); aggregate metrics, model size, parameter counts, and hardware details are in the [machine-readable summary](docs/benchmark_results_x2.json). Mean model-call times on the recorded CPU were 10.3 ms (Set5), 19.1 ms (Set14), 11.5 ms (BSD100), and 82.0 ms (Urban100). GPU memory was not measured. Manga109 was skipped because no authorized complete copy was available. See [benchmark protocol and dataset notes](docs/BENCHMARKS.md).
 
 ## Start here (Windows)
 
@@ -82,35 +93,9 @@ with Image.open("input.jpg") as src:
 output.save("input_x2.png")
 ```
 
-## Quantization and measured quality
+## Quantization
 
 The **weights are genuinely four-level quantized**, not unrestricted FP32 convolution weights. The default asymmetric levels are `-2, -1, 0, +1` times one FP32 scale per output channel. The 396 INT2 codes fit in 99 bytes. Activations, scales, biases, convolutions, and the bicubic baseline use floating-point calculations. This is **INT2 weight-quantized inference**, *not* a fully integer or 495-byte standalone executable.
-
-A previous local V6 experiment reported the following **development validation** figures, using a fixed 205-image split and five deterministic crops per image (1,025 patches, up to 512 HR pixels per crop):
-
-| Method | PSNR (dB) | Gain over bicubic |
-|---|---:|---:|
-| Bicubic | 33.1472 | — |
-| Spatial V3 before discrete refinement | 33.5423 | +0.3952 |
-| Spatial V5 refined | 33.5942 | +0.4471 |
-| Spatial V6 refined | **33.6794** | **+0.5323** |
-
-These are **user-reported training/evaluation results**, not CI benchmarks; the original images and split manifest are not bundled. Validation had been consulted during development, so it is **not an untouched independent test set**. They should not be presented as a new independent benchmark or a claim of being the world's smallest/most accurate model. See [Benchmark methodology](docs/BENCHMARKS.md) for reproducible and publication-ready evaluation guidance.
-
-### Classic 2× benchmark suite
-
-The included model was evaluated on the four complete classic sets available from the EDSR-linked archive. Scores are mean per-image Y-channel metrics under the documented protocol:
-
-| Dataset | Images | Bicubic Y PSNR (dB) | MicroSR Y PSNR (dB) | Gain | Bicubic Y SSIM | MicroSR Y SSIM |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Set5 | 5 | 33.6486 | **34.5494** | **+0.9008 dB** | 0.92923 | **0.93861** |
-| Set14 | 14 | 30.3177 | **31.0899** | **+0.7722 dB** | 0.86893 | **0.88992** |
-| BSD100 | 100 | 29.5445 | **30.2639** | **+0.7195 dB** | 0.84232 | **0.87052** |
-| Urban100 | 100 | 26.8676 | **27.6051** | **+0.7375 dB** | 0.83953 | **0.86257** |
-
-RGB PSNR/SSIM and per-image timings are in the [per-image results](docs/benchmark_per_image_x2.csv); aggregate metrics, stored parameter counts, model-file size, and hardware/memory fields are in the [machine-readable summary](docs/benchmark_results_x2.json). This CPU run measured mean forward-call times of 10.3 ms, 19.1 ms, 11.5 ms, and 82.0 ms respectively; GPU memory was not measured.
-
-Manga109 was skipped because official access is gated. Dataset images remain local and are not included. See [benchmark protocol, download instructions, and terms](docs/BENCHMARKS.md), plus the [machine-readable results and hashes](docs/benchmark_results_x2.json).
 
 ## Project structure
 
