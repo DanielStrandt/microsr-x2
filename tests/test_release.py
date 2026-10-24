@@ -26,3 +26,4 @@ def test_release_builder_checks_model_or_warns(tmp_path):
         assert any(n.endswith('/microsr_gui.py') for n in names)
         assert not any(n.endswith('microsr_v6.msr') for n in names)
     assert path.with_name(path.name + '.sha256').is_file()
+

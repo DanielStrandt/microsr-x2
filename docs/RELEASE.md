@@ -41,3 +41,4 @@ GitHub Releases: create tag `v0.1.0`, create a Release on GitHub and attach the 
 ## Suggested release notes
 
 MicroSR-X2 V6: 2× RGB super-resolution with a four-level INT2 convolution backbone (396 codes / 99 packed code bytes). Model payload includes 48 FP32 scales and 48 FP32 biases, yielding a 495-byte `.msr` model file with header/checksum. Desktop GUI and batch CLI available. Runtime uses floating-point PyTorch and bicubic upsampling. Development validation results are not independent test benchmarks.
+

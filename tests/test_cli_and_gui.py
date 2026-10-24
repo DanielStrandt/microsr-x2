@@ -44,3 +44,4 @@ def test_folder_search_does_not_recurse_by_default(tmp_path):
     (deep / 'inside.png').write_bytes(b'not decoded in directory listing')
     assert [p.name for p in image_paths(tmp_path, recursive=False)] == ['top.png']
     assert len(image_paths(tmp_path, recursive=True)) == 2
+

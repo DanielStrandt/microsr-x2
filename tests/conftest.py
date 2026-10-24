@@ -47,3 +47,4 @@ def synthetic_export(tmp_path):
 def synthetic_model_file(synthetic_export):
     from microsr_model import pack_msr
     return pack_msr(synthetic_export, synthetic_export.parent / 'microsr_v6.msr')
+

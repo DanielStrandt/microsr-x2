@@ -26,3 +26,4 @@ body:
     id: logs
     attributes:
       label: Redacted error output
+

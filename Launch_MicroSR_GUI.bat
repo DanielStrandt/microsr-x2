@@ -7,3 +7,4 @@ if errorlevel 1 (
   echo MicroSR GUI exited with an error. Check that Python, PyTorch, Pillow and NumPy are installed.
   pause
 )
+

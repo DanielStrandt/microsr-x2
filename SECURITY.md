@@ -11,3 +11,4 @@ For suspected security vulnerabilities, **do not post working exploit details in
 - Very large images may exhaust RAM or VRAM. Use tiling and system-level input limits for untrusted uploads; the desktop GUI is not a hardened multi-user web service.
 
 Security patches should preserve backward-compatible model reading when safe, and introduce a new model format version when necessary.
+

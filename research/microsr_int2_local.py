@@ -553,7 +553,8 @@ def quantization_comparison(raw_model, ema_model):
         details.append(f"{name}:{n}")
         max_master_gap = max(max_master_gap, float((a.weight - b.weight).abs().max()))
         max_scale_gap = max(max_scale_gap, float((sa - sb).abs().max()))
-    return (f"int2_code_differences={mismatches}/{total} "
+    return (f"int2_code_differences={
+mismatches}/{total} "
             f"by_layer=({','.join(details)}) "
             f"max_master_gap={max_master_gap:.3g} "
             f"max_scale_gap={max_scale_gap:.3g}")
@@ -977,7 +978,8 @@ def train(args):
                         opt = torch.optim.Adam(model.parameters(), lr=next_lr)
                         check_optimizer_binding()
                         print("PLATEAU: restored best inference weights; reset Adam and EMA")
-            save_checkpoint(run / "last.pt", model, opt, step, best, config,
+            save_checkpoint(run /
+ "last.pt", model, opt, step, best, config,
                             None, ema, scheduler_state=scheduler_state)
     print(f"Final INT2 distribution: {effective_code_summary(model)}")
     print(f"Done. Best {architecture} validation gain: {best:+.4f} dB")
@@ -1425,7 +1427,8 @@ def refine(args):
           f'({mse_psnr(state["guard_mse"]):.4f} dB). '
           f'Search samples={args.search_patches}, separate guard samples={args.guard_patches}.')
     print(f'Model budget: 396 deployed INT2 codes (99 packed bytes), '
-          f'48 biases + 48 scales (492 total scalar parameters). '
+          f'48 biases + 48 scales (492 total scalar paramete
+rs). '
           f'Grid={model.quant_grid}; quant-grad={model.quant_grad}; '
           f'edit_mode={args.mode}; crop_seed={args.crop_seed}.')
 
@@ -1875,7 +1878,8 @@ def refine_v6(args):
         run = Path(args.resume).resolve().parent
         model, ck = load_model(args.resume, device, use_inference=True)
         cfg = ck.get('config', {})
-        if not cfg.get('v6_refinement') or 'v6_state' not in ck:
+        if not cfg.get('v6_refinem
+ent') or 'v6_state' not in ck:
             raise ValueError('This is not a V6 checkpoint. Use refine-v6 --checkpoint '
                              'to start a new V6 run, or refine --resume for V4/V5.')
         settings = cfg['v6_settings']
@@ -2294,7 +2298,8 @@ def ablate(args, refine_defaults):
         raise ValueError('Ablation source checkpoint does not match current held-out split')
     # Never infer best selection from validation; this is an experiment protocol.
     trial_options = {k: getattr(args, k) for k in (
-        'rounds', 'search_patches', 'guard_patches', 'patch_size', 'context',
+        'rounds', 'search_patches', 'guard_patches', 'patch_siz
+e', 'context',
         'probe_batch', 'rank_patches', 'probes_per_round', 'explore_fraction',
         'scale_probes', 'scale_fraction', 'bias_steps', 'bias_lr',
         'bias_check_every', 'min_relative_gain', 'guard_tolerance',
@@ -2678,3 +2683,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

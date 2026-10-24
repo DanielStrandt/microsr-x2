@@ -14,3 +14,4 @@ python microsr_model.py info --model "./model/microsr_v6.msr"
 The `.gitignore` file deliberately **does not ignore `.msr`** so the published model remains available with the source.
 
 Do **not** commit the training dataset or large `.pt` training checkpoints to this lightweight inference repository. The `.pt` file is not required for deployment.
+

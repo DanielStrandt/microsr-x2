@@ -45,3 +45,4 @@ image rather than a pre-upscaled image.
 This is intentional. The inference app loads `.msr` or the trainer's `.bin/.json`
 export pair—not `.pt`. Run the trusted research trainer's `export` command, then
 pack it using `microsr_model.py`.
+

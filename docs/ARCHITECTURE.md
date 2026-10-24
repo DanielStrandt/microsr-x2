@@ -25,3 +25,4 @@ The full package and the PyTorch runtime are much larger. The model still perfor
 - The saved `.msr` contains no optimizer, floating master weights or training state.
 - Tiled inference uses low-resolution halos around each tile so outputs agree with full-frame prediction within floating-point tolerance on tested shapes.
 - For RGBA images, alpha uses bicubic scaling, not learned color convolution.
+

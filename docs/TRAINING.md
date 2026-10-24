@@ -35,3 +35,4 @@ python research/microsr_color_audit.py --checkpoint "<trusted-checkpoint-path>" 
 ```
 
 The audit checks real-image mean luminance/RGB shifts and out-of-range samples, plus flat colors, grayscale ramps and 2×2 pixel-phase artifacts. In the previous local test, the maximum average luma shift was 0.113/255 and maximum average red–green cast shift was 0.355/255 across 24 sampled crops; some crops had as many as 3.6522% pre-clamp out-of-range channels. These observations are **sample-specific** and not proof that clipping/artifacts never occur.
+

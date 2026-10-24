@@ -47,3 +47,4 @@ def test_float_images_are_explicitly_rejected(synthetic_model_file):
     with Image.new('F', (10, 9), color=0.5) as src:
         with pytest.raises(ValueError, match='16-bit or floating'):
             model.upscale_pil(src)
+

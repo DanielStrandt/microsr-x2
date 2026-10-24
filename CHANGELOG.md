@@ -9,3 +9,4 @@
 - Synthetic correctness tests, CPU CI for Windows/Linux, checkpoint parity checker and GitHub release packaging.
 
 **Note:** The 495-byte V6 model is included. Its terms are separate from the software MIT license.
+

@@ -12,3 +12,4 @@
 ## Security and data
 
 - [ ] No private images, user-specific absolute paths, or `.pt` checkpoints added
+

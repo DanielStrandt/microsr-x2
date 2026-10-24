@@ -66,3 +66,4 @@ def test_model_is_exactly_the_expected_backbone(synthetic_model_file):
     assert params == 0
     # Stored small INT2 buffers, per-channel scales and biases; no master weights.
     assert sum(getattr(net, name).codes.numel() for name in ('expand', 'dw1', 'dw2', 'project')) == 396
+

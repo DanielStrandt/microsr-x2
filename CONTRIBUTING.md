@@ -10,3 +10,4 @@ Thank you for helping improve MicroSR-X2.
 6. Cite full inference file size and PyTorch dependency rather than implying the runtime is 495 bytes.
 
 Pull requests should explain the change, affected outputs, and how you verified parity against previous behavior. No contributor license agreement is included.
+

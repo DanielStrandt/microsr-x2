@@ -7,6 +7,7 @@ __pycache__/
 .coverage
 htmlcov/
 .venv/
+.benchmark-packages/
 venv/
 .env
 .env.*
@@ -19,6 +20,7 @@ runs/
 data/
 output/
 outputs/
+benchmark-results/
 dist/
 build/
 *.pt
@@ -40,3 +42,4 @@ model/*.json
 Thumbs.db
 .vscode/
 .idea/
+
